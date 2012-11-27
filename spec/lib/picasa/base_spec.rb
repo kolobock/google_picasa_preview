@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Picasa::Base do
   subject { Picasa::Base.new }
+
   describe '#http_request' do
     it 'raises with protected method' do
       expect { subject.http_request }.to raise_error(NoMethodError)
@@ -20,5 +21,36 @@ describe Picasa::Base do
       Net::HTTP.any_instance.should_receive(:post)
       subject.send(:http_request, :post, 'http')
     end
+  end
+
+  describe '.entries' do
+    subject { Picasa::Base }
+    it 'raises with ArgumentError' do
+      expect { subject.entries }.to raise_error(ArgumentError)
+    end
+    context 'parse xml' do
+      let(:xml1) { '<feed><totalResults>1</totalResults><entry>1</entry></feed>' }
+      let(:xml2) { '<feed><totalResults>2</totalResults><entry>1</entry><entry>2</entry></feed>' }
+      it 'parses xml' do
+        XmlSimple.should_receive(:xml_in) { 'xml' }
+        subject.entries('<feed/>')
+      end
+      it { subject.entries('<feed/>').should == [] }
+      it { subject.entries(xml1).should have(1).item }
+      it { subject.entries(xml2).should have(2).items }
+    end
+  end
+
+  describe '#albums_list' do
+    it 'returns albums hash from xml'
+  end
+
+  describe '#photos_list' do
+    it 'returns photos hash from xml'
+    it 'returns max 3 photos'
+  end
+
+  describe '#comments_count' do
+    it 'returns count of the comments'
   end
 end
