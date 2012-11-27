@@ -101,6 +101,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.35)
+    xml-simple (1.1.2)
 
 PLATFORMS
   ruby
@@ -111,3 +112,4 @@ DEPENDENCIES
   rails (= 3.2.9)
   rspec-rails
   sqlite3
+  xml-simple
