@@ -1,6 +1,6 @@
 module Picasa
   class Session < Base
-    attr_accessor :token, :user
+    attr_accessor :token, :user, :captcha
 
     def google_login(email, password)
       url = 'https://www.google.com/accounts/ClientLogin'
@@ -15,12 +15,15 @@ module Picasa
       response = http_request(:post, url, params)
 
       if response.code =~ /20[01]/
+        self.captcha = nil
         self.user = email
         /Auth=([[:alnum:]_\-]+)\n/ =~ response.body.to_s
         self.token = $1
       else
         self.user = self.token = nil
         errors = response.body.scan(/Error=(.*)/i).flatten.compact
+        #TODO: unlock captcha url: https://www.google.com/accounts/DisplayUnlockCaptcha
+        self.captcha = true if errors.include?('CaptchaRequired')
         raise Picasa::PicasaLoginError, "The request for login has failed. (#{errors.to_sentence})"
       end
     end

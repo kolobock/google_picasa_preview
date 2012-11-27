@@ -32,7 +32,19 @@ describe Picasa::Session do
       it 'nullifies user and token' do
         subject.should_receive(:user=).with(nil)
         subject.should_receive(:token=).with(nil)
-        expect { subject.google_login(user, password) }.to raise_error(Picasa::PicasaLoginError)
+        subject.should_not_receive(:captcha=).with(true)
+        expect { subject.google_login(user, password) }.to raise_error
+      end
+      context 'captcha request from Google' do
+        let(:error) { 'CaptchaRequired' }
+        before do
+          mock_response.stub(:body) { "Error=#{error}" }
+          subject.stub(:http_request).and_return(mock_response)
+        end
+        it 'sets captcha=true' do
+          subject.should_receive(:captcha=).with(true)
+          expect { subject.google_login(user, password) }.to raise_error
+        end
       end
     end
 
@@ -52,6 +64,9 @@ describe Picasa::Session do
       end
       it 'sets token to Auth token' do
         subject.should_receive(:token=).with(token)
+      end
+      it 'nullifies captcha' do
+        subject.should_receive(:captcha=).with(nil)
       end
     end
 
