@@ -10,7 +10,7 @@ module Picasa
     def get_albums_list
       url = "https://picasaweb.google.com/data/feed/api/user/default"
 
-      response = http_request(:get, url, nil, default_header)
+      response = http_request(:get, url, nil, default_headers)
 
       if response.code =~ /20[01]/
         albums_list response.body
@@ -19,10 +19,11 @@ module Picasa
       end
     end
 
-    def get_photos_from_album(album_id)
+    def get_photos_from_album(album_id, options={limit: 3})
       url = "https://picasaweb.google.com/data/feed/api/user/default/albumid/#{album_id}"
+      params = "max-results=#{options[:limit]}"
 
-      response = http_request(:get, url, nil, default_header)
+      response = http_request(:get, url, params, default_headers)
 
       if response.code =~ /20[01]/
         photos_list response.body
@@ -35,7 +36,7 @@ module Picasa
       url = "https://picasaweb.google.com/data/feed/api/user/default/albumid/#{album_id}/photoid/#{photo_id}"
       params = 'kind=comment'
 
-      response = http_request(:get, url, params, default_header)
+      response = http_request(:get, url, params, default_headers)
 
       if response.code =~ /20[01]/
         comments_count response.body
@@ -59,15 +60,18 @@ module Picasa
         )
       end
 
-      response = http_request(:post, url, params, default_header.merge(headers))
+      response = http_request(:post, url, params, default_headers.merge(headers))
 
       raise Picasa::PicasaAuthorisationRequiredError, "The request for add a comment has failed. (#{response.body})" unless response.code =~ /20[01]/
     end
 
     private
 
-    def default_header
-      {"Authorization" => "GoogleLogin auth=#{self.session.token}"}
+    def default_headers
+      {
+        "Authorization" => "GoogleLogin auth=#{self.session.token}",
+        "GData-Version" => "2"
+      }
     end
   end
 end

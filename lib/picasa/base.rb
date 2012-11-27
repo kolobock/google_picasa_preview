@@ -44,8 +44,7 @@ module Picasa
       end
     end
 
-    def photos_list(xml_photos, options = {limit: 3})
-      limit = options.delete(:limit).to_i
+    def photos_list(xml_photos)
       self.class.entries(xml_photos).inject([]) do |photos, photo|
         photos << {
             photo_id:   photo['id'].last,
@@ -53,8 +52,6 @@ module Picasa
             thumbnail:  photo['group']['thumbnail'].second['url'],
             photo:      photo['content']['src']
           }
-        return photos unless photos.count < limit
-        photos
       end
     end
 
