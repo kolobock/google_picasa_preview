@@ -1,4 +1,13 @@
 GooglePicasaPreview::Application.routes.draw do
+  resources :albums, only: [:index, :show] do
+    post :add_comment
+  end
+
+  resources :sessions, only: [:new, :create, :destroy] do
+    get 'captcha' => 'sessions#captcha'
+  end
+
+  root to: 'albums#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -47,7 +56,7 @@ GooglePicasaPreview::Application.routes.draw do
   #   end
 
   # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
+  # just remember to delete public/index.html.bak.
   # root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"

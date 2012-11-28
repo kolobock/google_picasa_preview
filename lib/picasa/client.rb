@@ -2,9 +2,13 @@ module Picasa
   class Client < Base
     attr_accessor :session
 
-    def initialize(session)
-      raise Picasa::PicasaSessionRequired, "Picasa Client requires valid session" unless session.is_a?(Picasa::Session)
-      self.session = session
+    def initialize(session_or_user=nil, token=nil)
+      s = session_or_user
+      unless session_or_user.is_a?(Picasa::Session)
+        s = Picasa::Session.new(session_or_user, token) if session_or_user && token
+      end
+      raise Picasa::PicasaSessionRequired, "Picasa Client requires valid session" unless s.is_a?(Picasa::Session)
+      self.session = s
     end
 
     # retrieves albums from picasa
