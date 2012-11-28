@@ -17,7 +17,7 @@ module Picasa
       if response.code =~ /20[01]/
         albums_list response.body
       else
-        raise Picasa::PicasaAuthorisationRequiredError, "The request for get albums list has failed. (#{response.body})"
+        raise Picasa::PicasaAuthorisationRequiredError, "The request for get albums list has failed. (#{scan_body_for_errors(response.body).to_sentence})"
       end
     end
 
@@ -34,7 +34,7 @@ module Picasa
       if response.code =~ /20[01]/
         photos_list response.body
       else
-        raise Picasa::PicasaAuthorisationRequiredError, "The request for get photos has failed. (#{response.body})"
+        raise Picasa::PicasaAuthorisationRequiredError, "The request for get photos has failed. (#{scan_body_for_errors(response.body).to_sentence})"
       end
     end
 
@@ -49,7 +49,7 @@ module Picasa
       if response.code =~ /20[01]/
         comments_count response.body
       else
-        raise Picasa::PicasaAuthorisationRequiredError, "The request for get comment of photo has failed. (#{response.body})"
+        raise Picasa::PicasaAuthorisationRequiredError, "The request for get comment of photo has failed. (#{scan_body_for_errors(response.body).to_sentence})"
       end
     end
 
@@ -72,7 +72,7 @@ module Picasa
 
       response = http_request(:post, url, params, default_headers.merge(headers))
 
-      raise Picasa::PicasaAuthorisationRequiredError, "The request for add a comment has failed. (#{response.body})" unless response.code =~ /20[01]/
+      raise Picasa::PicasaAuthorisationRequiredError, "The request for add a comment has failed. (#{scan_body_for_errors(response.body).to_sentence})" unless response.code =~ /20[01]/
     end
 
     private

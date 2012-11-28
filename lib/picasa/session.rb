@@ -24,7 +24,7 @@ module Picasa
         self.token = $1
       else
         self.user = self.token = nil
-        errors = response.body.scan(/Error=(.*)/i).flatten.compact
+        errors = scan_body_for_errors(response.body)
         # set captcha = true if captcha error comes from the service. We will tell user to unlock captcha for login redirecting to unlock captcha url
         # unlock captcha url: https://www.google.com/accounts/DisplayUnlockCaptcha
         self.captcha = true if errors.include?('CaptchaRequired')

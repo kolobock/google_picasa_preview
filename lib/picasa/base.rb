@@ -34,7 +34,7 @@ module Picasa
       self.class.entries(xml_albums).inject([]) do |albums, album|
         albums << {
             album_id:         album['id'].last,
-            title:            album['title']['content'],
+            title:            (album['title']['content'] || album['group']['content']['title']['content']),
             summary:          album['summary']['content'],
             name:             album['name'],
             numphotos:        album['numphotos'].to_i,
@@ -57,6 +57,12 @@ module Picasa
 
     def comments_count(xml_comments)
       self.class.entries(xml_comments).count
+    end
+
+    private
+
+    def scan_body_for_errors(body)
+      body.scan(/Error=(.*)/i).flatten.compact
     end
   end
 
