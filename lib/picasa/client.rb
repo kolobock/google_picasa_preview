@@ -7,6 +7,8 @@ module Picasa
       self.session = session
     end
 
+    # retrieves albums from picasa
+    # https://developers.google.com/picasa-web/docs/2.0/developers_guide_protocol#ListAlbums
     def get_albums_list
       url = "https://picasaweb.google.com/data/feed/api/user/default"
 
@@ -19,6 +21,10 @@ module Picasa
       end
     end
 
+    # retrieves photos from the specific album
+    # https://developers.google.com/picasa-web/docs/2.0/developers_guide_protocol#ListPhotos
+    # limiting number of photos with max-results param
+    # https://developers.google.com/picasa-web/docs/2.0/reference#Parameters
     def get_photos_from_album(album_id, options={limit: 3})
       url = "https://picasaweb.google.com/data/feed/api/user/default/albumid/#{album_id}"
       params = "max-results=#{options[:limit]}"
@@ -32,6 +38,8 @@ module Picasa
       end
     end
 
+    # retrieves comments for photo and returns their count only (we don't need to show the comments as per original task description)
+    # https://developers.google.com/picasa-web/docs/2.0/developers_guide_protocol#ListComments
     def get_recent_comments_for_photo(album_id, photo_id)
       url = "https://picasaweb.google.com/data/feed/api/user/default/albumid/#{album_id}/photoid/#{photo_id}"
       params = 'kind=comment'
@@ -46,6 +54,8 @@ module Picasa
     end
 
     require 'builder'
+    # adds a coomment ot a photo
+    # https://developers.google.com/picasa-web/docs/2.0/developers_guide_protocol#AddComments
     def add_comment_to_photo(album_id, photo_id, comment)
       url = "https://picasaweb.google.com/data/feed/api/user/default/albumid/#{album_id}/photoid/#{photo_id}"
       headers = { "Content-Type"  => "application/atom+xml" }
@@ -68,6 +78,7 @@ module Picasa
     private
 
     def default_headers
+      # https://developers.google.com/picasa-web/docs/2.0/developers_guide_protocol#Versioning
       {
         "Authorization" => "GoogleLogin auth=#{self.session.token}",
         "GData-Version" => "2"
