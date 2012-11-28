@@ -40,17 +40,4 @@ describe Picasa::Base do
       it { subject.entries(xml2).should have(2).items }
     end
   end
-
-  describe '#albums_list' do
-    it 'returns albums hash from xml'
-  end
-
-  describe '#photos_list' do
-    it 'returns photos hash from xml'
-    it 'returns max 3 photos'
-  end
-
-  describe '#comments_count' do
-    it 'returns count of the comments'
-  end
 end
