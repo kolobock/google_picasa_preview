@@ -34,7 +34,7 @@ module Picasa
       self.class.entries(xml_albums).inject([]) do |albums, album|
         albums << {
             album_id:         album['id'].last,
-            title:            (album['title']['content'] || album['group']['content']['title']['content']),
+            title:            (album['title']['content'] || album['group']['title']['content']),
             summary:          album['summary']['content'],
             name:             album['name'],
             numphotos:        album['numphotos'].to_i,
