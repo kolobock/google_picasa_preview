@@ -43,3 +43,5 @@ group :development, :test do
 end
 
 gem 'xml-simple'
+
+gem 'haml-rails'
