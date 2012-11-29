@@ -1,6 +1,10 @@
+- @page_title_text = 'Unlock Captcha'
 %h1 UnlockCaptcha
 
-.field Unlock with a captcha action is required to continue a work. \
-  Please go the link below and follow on-screen instructions to unlock you account.
+.field
+  Unlock with a captcha action is required to continue work with a Google service API.
+  Please go to the link below and follow on-screen instructions to unlock you account.
 .field
   = link_to :unlock_captcha, 'https://www.google.com/accounts/DisplayUnlockCaptcha'
+.field
+  = link_to :back, back_url

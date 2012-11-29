@@ -1,14 +1,10 @@
 module Picasa
   class Client < Base
-    attr_accessor :session
+    attr_accessor :token
 
-    def initialize(session_or_user=nil, token=nil)
-      s = session_or_user
-      unless session_or_user.is_a?(Picasa::Session)
-        s = Picasa::Session.new(session_or_user, token) if session_or_user && token
-      end
-      raise Picasa::PicasaSessionRequired, "Picasa Client requires valid session" unless s.is_a?(Picasa::Session)
-      self.session = s
+    def initialize(token=nil)
+      raise Picasa::PicasaSessionRequired, "Picasa Client requires valid session token" unless token
+      self.token = token
     end
 
     # retrieves albums from picasa
@@ -84,7 +80,7 @@ module Picasa
     def default_headers
       # https://developers.google.com/picasa-web/docs/2.0/developers_guide_protocol#Versioning
       {
-        "Authorization" => "GoogleLogin auth=#{self.session.token}",
+        "Authorization" => "GoogleLogin auth=#{self.token}",
         "GData-Version" => "2"
       }
     end

@@ -1,32 +1,33 @@
 class ApplicationController < ActionController::Base
+  respond_to :html, :json
+
   protect_from_forgery
 
   before_filter :check_is_login_required
   before_filter :store_location
 
-  rescue_from ActiveRecord::RecordNotFound, :with => :not_found
+  rescue_from Picasa::PicasaAuthorisationRequiredError, with: :authorized_denied
 
-  alias :default_redirect_to :redirect_to
-  def redirect_to(*args)
-    # we need to keep flash messages for the next action if we redirect
-    flash.keep
-    default_redirect_to *args
-  end
+  #alias :default_redirect_to :redirect_to
+  #def redirect_to(*args)
+  #  # we need to keep flash messages for the next action if we redirect
+  #  flash.keep
+  #  default_redirect_to *args
+  #end
 
   def check_is_login_required
     authorized_denied unless logged_in?
   end
 
   #status 403
-  def authorized_denied
+  def authorized_denied(exception=nil)
     cleanup_login_information!
-    msg = I18n.t(:error403, :scope => "system")
+    msg = exception.is_a?(Picasa::PicasaAuthorisationRequiredError) ? exception.message : I18n.t(:error403, :scope => "system")
     respond_to do |format|
       format.html { store_location
-      flash[:error] = msg
-      redirect_to new_session_path
+        flash[:error] = msg
+        redirect_to new_session_path
       }
-      format.xml { render :text => {'error' => msg}.to_xml(:root => 'errors'), :status => 403 }
       format.json { render :text => {'error' => msg}.to_json, :status => 403 }
     end
     return false
@@ -45,27 +46,17 @@ class ApplicationController < ActionController::Base
     session[:return_to] = root_url
   end
 
-  def redirect_back_or_default(default, options = {})
+  def redirect_back_or_default(default=root_url, options = {})
     redirect_to((session[:return_to] || default), options)
     session[:return_to] = nil
   end
 
   private
 
-  def not_found
-    respond_with(nil, :status => 404) do |format|
-      format.html {
-        flash[:error] = I18n.t(:error404, :scope => "system")
-        redirect_to(root_path)
-      }
-      format.xml { render :text => {'error' => 'Resource not found'}.to_xml(:root => 'errors'), :status => 404 }
-      format.json { render :text => {'errors' => ['Resource not found']}.to_json, :status => 404 }
-    end
-  end
-
   def logged_in?
     session[:user] && session[:token]
   end
+  helper_method :logged_in?
 
   def cleanup_login_information!
     reset_session
@@ -75,5 +66,9 @@ class ApplicationController < ActionController::Base
   def set_login_information!(s)
     session[:user] = s.user
     session[:token] = s.token
+  end
+
+  def init_picasa_client
+    @client = Picasa::Client.new(session[:token])
   end
 end

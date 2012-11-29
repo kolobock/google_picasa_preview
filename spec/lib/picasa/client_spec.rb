@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Picasa::Client do
   subject { Picasa::Client }
-  it 'raises PicasaSessionRequired if initialized without a session' do
+  it 'raises PicasaSessionRequired if initialized without a token' do
     expect { subject.new('') }.to raise_error(Picasa::PicasaSessionRequired)
   end
 

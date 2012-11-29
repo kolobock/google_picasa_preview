@@ -1,10 +1,12 @@
 GooglePicasaPreview::Application.routes.draw do
-  resources :albums, only: [:index, :show] do
-    post :add_comment
+  resources :albums, only: [:index] do
+    resources :photos, only: [:index] do
+      post :add_comment
+    end
   end
 
   resources :sessions, only: [:new, :create, :destroy] do
-    get 'captcha' => 'sessions#captcha'
+    get :captcha, on: :member
   end
 
   root to: 'albums#index'
