@@ -8,9 +8,10 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
- *= require_tree .
+
+
  */
+
 .hidden { display: none !important; }
 body span#flasher {
     /*position: absolute;*/
@@ -224,4 +225,98 @@ span.num {
 }
 .photos_sidebar .photo.selected a.selected img {
     border: solid #116688 2px;
+}
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+body .login, .login input, .login button, .login form {
+    /*position: relative;*/
+    behavior: url(/javascripts/PIE.htc);
+    padding: 15px 20px;
+    font-size: 1em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+span.h3 {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    margin-left: 40%;
+    margin-right: auto;
+    /*margin-left: 50%;*/
+    /*margin-right: 50%;*/
+    /*width: 50%;*/
+    max-width: 300px;
+}
+
+input[type="submit"] {
+    /*display: inline-block;*/
+    font-family: "Helvetica Neue", Arial, Verdana, sans-serif;
+    background-color: #eeeeee;
+    padding: 4px 10px 3px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 24px;
+    border: 1px solid #c5c4c4;
+    font-weight: bold;
+    border-bottom-color: #a7a6a6;
+    vertical-align: middle;
+    color:#7c7c7c;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+    cursor:pointer !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+input[type="submit"]:hover {
+    background-color: #eeeeee;
+    color:#7c7c7c;
+    text-decoration: none;
+    border-bottom-color: #b9b9b9;
+    opacity:1;
+}
+
+form .field {
+    margin: 10px 0 15px 0;
+    padding: 0;
+    font-size: 0;
+}
+
+form .field > * {
+    font-size: 14px;
+}
+
+form .field label {
+    color: #7c7c7c;
+    margin: 0;
+    vertical-align: middle;
+    display: inline-block;
+
+    padding: 0 5px;
+    min-width: 90px;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: auto;
+    line-height: 18px;
+    font-weight: bold;
+}
+
+form input {
+    width: auto;
+}
+.login form input[type="submit"] { width: 98%; }
+
+.login form {
+    width: 350px;
+}
+.login {
+    margin-top: 20%;
 }
