@@ -79,13 +79,6 @@ body #container #internal_container {
     position: relative;
     float: left;
 }
-.albums_sidebar .albums {
-    padding: 0px 1px;
-}
-.albums_sidebar .album:hover {
-    border: solid #BBB 1px;
-    padding: 0px;
-}
 
 .center_pane {
     margin: 0;
@@ -124,12 +117,6 @@ body #container #internal_container {
     margin: 0;
 }
 
-span.name {
-    font-size: 14px;
-}
-span.num {
-    font-size: 12px;
-}
 .space {
     height: 1px;
     padding: 1px 1px;

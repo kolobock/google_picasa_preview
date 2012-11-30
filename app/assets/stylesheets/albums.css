@@ -2,3 +2,18 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+
+.albums_sidebar .albums {
+    padding: 0px 1px;
+}
+.albums_sidebar .album:hover {
+    border: solid #BBB 1px;
+    padding: 0px;
+}
+
+span.name {
+    font-size: 14px;
+}
+span.num {
+    font-size: 12px;
+}
