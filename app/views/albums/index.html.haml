@@ -14,6 +14,11 @@
       $('.photos_sidebar .photos .photo').removeClass('selected');
       $(event.currentTarget).closest('.photo').addClass('selected');
       $('.photo_view').html('<img src="' + event.currentTarget.href + '" >');
+      $('.comments_view').removeClass('hidden');
+
+      $.get("/albums/" + $('.album.selected').attr('data-id') + "/photos/" + $('.photo.selected').attr('data-id') + "/comments", function(data){
+        $('.comments_view').html(data);
+      });
       return false;
     });
   };
@@ -31,6 +36,7 @@
         $('.photos_sidebar .photos .photo a:first').trigger('click');
       });
       $('.photo_view').empty();
+      $('.comments_view').empty().addClass('hidden');
       return false;
     });
     $(".album .thumb a:first").trigger('click');

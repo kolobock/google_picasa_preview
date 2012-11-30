@@ -64,17 +64,17 @@ body #container #internal_container {
     background-color: #eee;
     max-width: 900px;
     /*margin: auto;*/
-    max-height: 570px;
+    max-height: 770px;
     overflow-y: hidden;
     display: block;
 }
 
 .albums_sidebar {
-    width: 180px;
+    width: 186px;
     text-align: center;
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 565px;
+    max-height: 765px;
     display: inline-block;
     position: relative;
     float: left;
@@ -83,7 +83,7 @@ body #container #internal_container {
 .center_pane {
     margin: 0;
     position: inherit;
-    max-height: 570px;
+    max-height: 770px;
     display: inline;
     margin-left: 180px;
 }
@@ -100,16 +100,18 @@ body #container #internal_container {
     max-width: 80px;
 }
 .photo_view {
-    max-height: 490px;
+    max-height: 520px;
     display: block;
     margin-left: 10px;
     float: left;
 }
 .photo_view img {
-    max-height: 460px;
+    max-height: 500px;
     max-width: 700px;
 }
-
+.center_pane .comment {
+    max-height: 195px;
+}
 .header#login {
     max-width: 900px;
     background-color: #eef;
@@ -129,6 +131,75 @@ body #container #internal_container {
     margin-left: 10px;
 }
 
-.comment.facebox {
+.comments_view {
+    /*float: left;*/
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 200px;
+    min-width: 600px;
+    max-width: 700px;
+    margin-left: 10px;
+}
+
+.comment {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 150px;
+}
+.comment span.author {
+    float: left;
+}
+.comment span.message {
+    margin-left: 200px;
+}
+
+.add_comment {
+    max-height: 50px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+}
+.add_comment form .fieldset span.message {
+    float: left;
+}
+.add_comment form .fieldset span.button {
     float: right;
+    max-width: 250px;
+    min-width: 75px;
+    max-height: 50px;
+}
+.add_comment form .fieldset button {
+    float: right;
+    max-width: 250px;
+    min-width: 75px;
+    max-height: 50px;
+    font-family: "Helvetica Neue", Arial, Verdana, sans-serif;
+    background-color: #eeeeee;
+    padding: 4px 10px 3px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 24px;
+    border: 1px solid #c5c4c4;
+    font-weight: bold;
+    border-bottom-color: #a7a6a6;
+    vertical-align: middle;
+    color:#7c7c7c;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+    cursor:pointer !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+.add_comment form .fieldset button:hover {
+    background-color: #eeeeee;
+    color:#7c7c7c;
+    text-decoration: none;
+    border-bottom-color: #b9b9b9;
+    opacity:1;
+}
+.add_comment form textarea {
+    max-height: 50px;
+    overflow: hidden;
+    max-width: 500px;
+    min-width: 350px;
 }

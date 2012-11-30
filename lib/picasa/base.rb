@@ -47,17 +47,28 @@ module Picasa
     def photos_list(xml_photos)
       self.class.entries(xml_photos).inject([]) do |photos, photo|
         photos << {
-            photo_id:   photo['id'].last,
-            title:      (photo['group']['description']['content'] || photo['group']['title']['content']),
-            thumbnail:  photo['group']['thumbnail'].first['url'],
-            photo:      photo['content']['src'],
+            photo_id:    photo['id'].last,
+            title:       (photo['group']['description']['content'] || photo['group']['title']['content']),
+            thumbnail:   photo['group']['thumbnail'].first['url'],
+            photo:       photo['content']['src'],
             numcomments: photo['commentCount'].to_i
           }
       end
     end
 
-    def comments_count(xml_comments)
-      self.class.entries(xml_comments).count
+    def comments_list(xml_comments, options={limit: 3})
+      comment_entries = self.class.entries(xml_comments)
+      comment_entries.reverse.inject([]) do |comments, comment|
+        comments << {
+            comment_id:   comment['id'].last,
+            added_at:     comment['published'],
+            author:       comment['author']['name'],
+            message:      comment['content']['content'],
+            count:        comment_entries.count
+        }
+        return comments unless comments.count < options[:limit]
+        comments
+      end
     end
 
     private

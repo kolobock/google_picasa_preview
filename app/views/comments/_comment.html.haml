@@ -1,0 +1,9 @@
+.comment{data: {id: comment[:comment_id]}}
+  %span.author
+    = comment[:author]
+  \&nbsp;(at&nbsp;
+  %span.timestamp
+    = date_readable_format(comment[:added_at])
+  \)
+  %span.message
+    = comment[:message]

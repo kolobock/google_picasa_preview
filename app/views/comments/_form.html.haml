@@ -1,0 +1,6 @@
+= form_tag album_photo_comments_url(album, photo), id: 'add_comment_to_photo', remote: true do
+  .fieldset
+    %span.message
+      = text_area_tag :message
+    %span.button
+      = button_tag "Add a comment"

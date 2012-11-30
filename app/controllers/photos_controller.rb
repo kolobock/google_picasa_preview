@@ -8,13 +8,6 @@ class PhotosController < ApplicationController
     end
   end
 
-  def add_comment
-    @photo = params[:photo_id]
-    @comment  = params[:comment]
-    @client.add_comment_to_photo @album, @photo, @comment
-    @comment_count = @client.get_recent_comments_for_photo(@album, @photo)
-  end
-
   private
 
   def find_album

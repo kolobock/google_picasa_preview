@@ -1,7 +1,7 @@
 GooglePicasaPreview::Application.routes.draw do
   resources :albums, only: [:index] do
     resources :photos, only: [:index] do
-      post :add_comment
+      resources :comments, only: [:index, :create]
     end
   end
 

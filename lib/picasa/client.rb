@@ -47,7 +47,7 @@ module Picasa
       response = http_request(:get, url, params, default_headers)
 
       if response.code =~ /20[01]/
-        comments_count response.body
+        comments_list response.body
       else
         raise Picasa::PicasaAuthorisationRequiredError, "The request for get comment of photo has failed. (#{scan_body_for_errors(response.body).to_sentence})"
       end

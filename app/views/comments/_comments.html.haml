@@ -1,0 +1,26 @@
+.comments
+  - if comments.present?
+    .num
+      = pluralize(comments.first[:count], 'comment');
+    - comments.each do |comment|
+      = render partial: 'comment', locals: {comment: comment}
+  - else
+    .no_content There is no any comment for the photo
+.space
+.add_comment
+  = render partial: 'form', locals: {album: @album, photo: @photo}
+  :javascript
+    $(function(){
+      $('.add_comment #add_comment_to_photo').unbind('submit');
+      $('.add_comment #add_comment_to_photo button').bind('click', function(e){
+        e.preventDefault();
+        $(this).closest('#add_comment_to_photo').submit();
+        setTimeout(function() {
+          $.get("/albums/" + $('.album.selected').attr('data-id') + "/photos/" + $('.photo.selected').attr('data-id') + "/comments", function(data){
+            $('.comments_view').empty();
+            $('.comments_view').html(data);
+          });
+        },500);
+        return false;
+      });
+    });

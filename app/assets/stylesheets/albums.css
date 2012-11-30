@@ -17,3 +17,10 @@ span.name {
 span.num {
     font-size: 12px;
 }
+
+.albums_sidebar .album.selected {
+    border: solid #44AA44 2px;
+}
+.photos_sidebar .photo.selected a.selected img {
+    border: solid #116688 2px;
+}
