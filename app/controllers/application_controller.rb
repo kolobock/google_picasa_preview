@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
         flash[:error] = msg
         redirect_to new_session_path
       }
-      format.json { render :text => {'error' => msg}.to_json, :status => 403 }
+      #format.json { render :text => {'error' => msg}.to_json, :status => 403 }
     end
     return false
   end

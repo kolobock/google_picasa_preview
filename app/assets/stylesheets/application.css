@@ -11,28 +11,7 @@
  *= require_self
  *= require_tree .
  */
-.hide { display:none; }
 .hidden { display: none !important; }
-body .login, .login input, .login button, .login form {
-    /*position: relative;*/
-    behavior: url(/javascripts/PIE.htc);
-    padding: 15px 20px;
-    font-size: 1em;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-span.h3 {
-    position: relative;
-    display: inline-block;
-    font-size: 20px;
-    margin-left: 40%;
-    margin-right: auto;
-    /*margin-left: 50%;*/
-    /*margin-right: 50%;*/
-    /*width: 50%;*/
-    max-width: 300px;
-}
 body span#flasher {
     /*position: absolute;*/
     margin: auto;
@@ -70,92 +49,99 @@ body span#flasher a.close_flash {
         cursor: pointer;
 }
 
-input[type="submit"] {
-    /*display: inline-block;*/
-    font-family: "Helvetica Neue", Arial, Verdana, sans-serif;
-    background-color: #eeeeee;
-    padding: 4px 10px 3px;
-    text-align: center;
-    font-size: 12px;
-    line-height: 24px;
-    border: 1px solid #c5c4c4;
-    font-weight: bold;
-    border-bottom-color: #a7a6a6;
-    vertical-align: middle;
-    color:#7c7c7c;
-    text-shadow: 0 1px 1px rgba(255,255,255,0.8);
-    cursor:pointer !important;
-    margin-left: auto;
-    margin-right: auto;
-}
-input[type="submit"]:hover {
-    background-color: #eeeeee;
-    color:#7c7c7c;
-    text-decoration: none;
-    border-bottom-color: #b9b9b9;
-    opacity:1;
-}
-
-form .field {
-    margin: 10px 0 15px 0;
-    padding: 0;
-    font-size: 0;
-}
-
-form .field > * {
-  font-size: 14px;
-}
-
-form .field label {
-    color: #7c7c7c;
-    margin: 0;
-    vertical-align: middle;
-    display: inline-block;
-
-    padding: 0 5px;
-    min-width: 90px;
-    max-width: 140px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: auto;
-    line-height: 18px;
-    font-weight: bold;
-}
-
-
-form input {
-    width: auto;
-}
-.login form input[type="submit"] { width: 98%; }
-form textarea{
-    max-width:660px;
-}
-
 body #container {
-    max-width: 960px;
+    max-width: 900px;
     padding: 0 15px;
     margin: auto;
 }
 
-body #container .mainpanel {
+body #container .mainpanel,
+body #container .footer {
     max-width: 900px;
     padding: 0 5px;
 }
 body #container #internal_container {
     background-color: #eee;
-    max-width: 90%;
+    max-width: 900px;
     /*margin: auto;*/
+    max-height: 570px;
+    overflow-y: hidden;
+    display: block;
 }
 
-.login form {
-    width: 350px;
+.albums_sidebar {
+    width: 180px;
+    text-align: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 565px;
+    display: inline-block;
+    position: relative;
+    float: left;
 }
-.login {
-    margin-top: 20%;
+.albums_sidebar .albums {
+    padding: 0px 1px;
+}
+.albums_sidebar .album:hover {
+    border: solid #BBB 1px;
+    padding: 0px;
+}
+
+.center_pane {
+    margin: 0;
+    position: inherit;
+    max-height: 570px;
+    display: inline;
+    margin-left: 180px;
+}
+
+.photos_sidebar {
+    overflow-y: hidden;
+    overflow-x: auto;
+    max-height: 100px;
+    /*max-width: 100%;*/
+}
+.photos_sidebar .photos .thumb img {
+    margin-left: 10px;
+    max-height: 80px;
+    max-width: 80px;
+}
+.photo_view {
+    max-height: 490px;
+    display: block;
+    margin-left: 10px;
+    float: left;
+}
+.photo_view img {
+    max-height: 460px;
+    max-width: 700px;
 }
 
 .header#login {
-    max-width: 90%;
+    max-width: 900px;
     background-color: #eef;
-    padding: 0 1px;
+    /*padding: 0;*/
+    margin: 0;
+}
+
+span.name {
+    font-size: 14px;
+}
+span.num {
+    font-size: 12px;
+}
+.space {
+    height: 1px;
+    padding: 1px 1px;
+}
+.footer#footer {
+    float: right;
+}
+
+.no_content {
+    margin-left: 10px;
+}
+
+.comment.facebox {
+    float: right;
 }

@@ -3,6 +3,9 @@ class PhotosController < ApplicationController
 
   def index
     @photos = @client.get_photos_from_album(@album)
+    respond_to do |format|
+      format.html { render partial: 'photos', locals: {photos: @photos} }
+    end
   end
 
   def add_comment

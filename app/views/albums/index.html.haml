@@ -1,5 +1,37 @@
 - @page_title_text = 'Albums list'
-%h1 Albums#index
-%p Find me in app/views/albums/index.html.haml
-- @albums.each do |album|
-  = album.inspect
+= content_for :albums do
+  %span.albums
+    - @albums.each do |album|
+      = render partial: 'album', locals: {album: album}
+
+:javascript
+  var rebind_photo_click = function(objs){
+    $(objs).bind('click', function(event){
+      if ($(event.currentTarget).hasClass('selected'))
+        return false;
+      $(objs).removeClass('selected');
+      $(event.currentTarget).addClass('selected');
+      $('.photos_sidebar .photos .photo').removeClass('selected');
+      $(event.currentTarget).closest('.photo').addClass('selected');
+      $('.photo_view').html('<img src="' + event.currentTarget.href + '" >');
+      return false;
+    });
+  };
+  $(function(){
+    $(".album .thumb a").bind('click', function(event){
+      if ($(event.currentTarget).hasClass('selected'))
+        return false;
+      $('.album .thumb a').removeClass('selected');
+      $(event.currentTarget).addClass('selected');
+      $('.album').removeClass('selected');
+      $(event.currentTarget).closest('.album').addClass('selected');
+      $.get(event.currentTarget.href, function(data){
+        $('.photos_sidebar').html(data);
+        rebind_photo_click('.photos_sidebar .photos .photo a');
+        $('.photos_sidebar .photos .photo a:first').trigger('click');
+      });
+      $('.photo_view').empty();
+      return false;
+    });
+    $(".album .thumb a:first").trigger('click');
+  });

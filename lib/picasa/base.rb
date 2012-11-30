@@ -49,8 +49,9 @@ module Picasa
         photos << {
             photo_id:   photo['id'].last,
             title:      (photo['group']['description']['content'] || photo['group']['title']['content']),
-            thumbnail:  photo['group']['thumbnail'].second['url'],
-            photo:      photo['content']['src']
+            thumbnail:  photo['group']['thumbnail'].first['url'],
+            photo:      photo['content']['src'],
+            numcomments: photo['commentCount'].to_i
           }
       end
     end

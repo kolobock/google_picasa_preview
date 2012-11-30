@@ -9,15 +9,23 @@
     = javascript_include_tag 'application'
   %body
     #container
-      .wrapper
-        .mainpanel
-          = render_flash_messages
-          .header#login
-            - if logged_in?
-              Logged in as
-              = session[:user]
-              \, not you?
-              = link_to 'log out', session_url(session[:session_id]), data: {method: :delete}
-          #internal_container
-            = yield
+      .mainpanel
+        = render_flash_messages
+        .header#login
+          - if logged_in?
+            Logged in as
+            = session[:user]
+            \, not you?
+            = link_to 'log out', session_url(session[:session_id]), data: {method: :delete}
+        .space
+        #internal_container
+          .albums_sidebar
+            = yield :albums
+          .center_pane
+            .photos_sidebar
+              -#= yield :photos
+            .space
+            .photo_view
+              = yield
       .footer#footer
+        KcK GooglePicasaPreview 1.0.0 &copy; 2012

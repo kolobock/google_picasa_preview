@@ -1,0 +1,12 @@
+.album{data: {id: album[:album_id]}}
+  .name
+    %span.name
+      = album[:name]
+    %br
+    %span.num
+      = "(#{pluralize(album[:numphotos], 'photo')})"
+  .thumb
+    = link_to album_photos_url(album[:album_id]) do
+      = image_tag album[:photo_thumbnail], title: album[:title]
+  .space
+    %br

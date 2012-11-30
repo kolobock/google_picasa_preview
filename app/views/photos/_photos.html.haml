@@ -1,0 +1,11 @@
+%span.photos
+  - if photos.present?
+    - photos.each do |photo|
+      = render partial: 'photo', locals: {photo: photo}
+  - else
+    .no_content There is no any photo in the album
+
+.comment.facebox
+  = form_tag root_url do
+    = text_area_tag :comment
+    = submit_tag 'Add a comment'

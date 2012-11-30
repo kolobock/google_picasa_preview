@@ -1,0 +1,6 @@
+%span.photo{data: {id: photo[:photo_id]}}
+  %span.thumb
+    = link_to photo[:photo] do
+      = image_tag photo[:thumbnail], title: "#{photo[:title]} (#{pluralize(photo[:numcomments], 'comment')})"
+
+
