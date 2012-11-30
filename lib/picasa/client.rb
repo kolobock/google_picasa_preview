@@ -3,7 +3,7 @@ module Picasa
     attr_accessor :token
 
     def initialize(token=nil)
-      raise Picasa::PicasaSessionRequired, "Picasa Client requires valid session token" unless token
+      raise Picasa::PicasaSessionRequired, "Picasa Client requires valid session token" unless token.present?
       self.token = token
     end
 

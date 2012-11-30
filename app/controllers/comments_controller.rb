@@ -10,12 +10,6 @@ class CommentsController < ApplicationController
     render text: 'No comments'
   end
 
-  #def new
-  #  respond_to do |format|
-  #    format.html { render partial: 'form', locals: {album: @album, photo: @photo} }
-  #  end
-  #end
-
   def create
     @comment = params[:message]
     @client.add_comment_to_photo(@album, @photo, @comment)

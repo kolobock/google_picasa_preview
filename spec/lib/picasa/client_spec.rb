@@ -14,15 +14,10 @@ describe Picasa::Client do
   end
 
   context 'requests' do
-    let(:session) { s = Picasa::Session.new
-        s.user  = 'test@gmail.com'
-        s.token = 'session_token'
-        s.captcha = nil
-      s
-    }
+    let(:session_token) { 'session_token' }
     let(:mock_response) { mock().as_null_object }
 
-    subject { Picasa::Client.new(session) }
+    subject { Picasa::Client.new(session_token) }
 
     let(:album_id) { 123 }
     let(:photo_id) { 123 }
@@ -35,7 +30,7 @@ describe Picasa::Client do
         subject.stub(:http_request).and_return(mock_response)
         subject.stub(:albums_list) { body }
         subject.stub(:photos_list) { body }
-        subject.stub(:comments_count) { body }
+        subject.stub(:comments_list) { body }
       end
 
       describe '#get_albums_list' do
@@ -47,7 +42,7 @@ describe Picasa::Client do
               :get,
               "https://picasaweb.google.com/data/feed/api/user/default",
               nil,
-              default_headers(subject.session.token)
+              default_headers(subject.token)
           ) { mock_response }
           subject.get_albums_list
         end
@@ -62,7 +57,7 @@ describe Picasa::Client do
               :get,
               "https://picasaweb.google.com/data/feed/api/user/default/albumid/#{album_id}",
               'max-results=3',
-              default_headers(subject.session.token)
+              default_headers(subject.token)
           ) { mock_response }
           subject.get_photos_from_album(album_id)
         end
@@ -82,7 +77,7 @@ describe Picasa::Client do
       end
 
       describe '#get_recent_comments_for_photo' do
-        it 'returns comments count' do
+        it 'returns comments hash' do
           subject.get_recent_comments_for_photo(album_id, photo_id).should == body
         end
         it 'sends :get request to comments list url' do
@@ -90,7 +85,7 @@ describe Picasa::Client do
               :get,
               "https://picasaweb.google.com/data/feed/api/user/default/albumid/#{album_id}/photoid/#{photo_id}",
               'kind=comment',
-              default_headers(subject.session.token)
+              default_headers(subject.token)
           ) { mock_response }
           subject.get_recent_comments_for_photo(album_id, photo_id)
         end
@@ -111,7 +106,7 @@ describe Picasa::Client do
               :post,
               "https://picasaweb.google.com/data/feed/api/user/default/albumid/#{album_id}/photoid/#{photo_id}",
               "",
-              default_headers(subject.session.token).merge("Content-Type"  => "application/atom+xml")
+              default_headers(subject.token).merge("Content-Type"  => "application/atom+xml")
           ) { mock_response }
           subject.add_comment_to_photo(album_id, photo_id, comment)
         end
